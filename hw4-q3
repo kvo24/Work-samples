@@ -1,0 +1,123 @@
+/************ data model **************/
+.symbol_type PersonType
+.symbol_type DescriptionType
+
+.decl person(name:PersonType, description:DescriptionType)
+.input person(filename="DATA/person.facts")
+
+.decl female(name:PersonType)
+.input female(filename="DATA/female.facts")
+
+.decl male(name:PersonType)
+.input male(filename="DATA/male.facts")
+
+.decl parent_child(p1:PersonType, p2:PersonType)
+.input parent_child(filename="DATA/parent_child.facts")
+
+.decl person_living(p:PersonType)
+.input person_living(filename="DATA/person_living.facts")
+
+/************* problem 0 **************/
+/**** Find all children of Priscilla and their descriptions ****/
+.decl p0(x:PersonType, d:DescriptionType)
+// NOTE: if you want to redirect the output to a file
+// you can use the syntax:
+// .output p0(filename="hw2-q3-0.ans")
+// .output p0(IO=stdout)
+p0(x,d) :- parent_child("Priscilla",x), person(x,d).
+
+
+
+
+
+/************* problem 1 **************/
+/**** Find all descendants of Priscilla and their descriptions ****/
+.decl p1(x:PersonType, d:DescriptionType)
+.decl t(x:PersonType)
+
+.output p1(filename="../submission/hw2-q3-1.ans")
+
+t(x) :- parent_child("Priscilla", x).
+t(x) :- t(y), parent_child(y, x).
+p1(x, d) :- t(x), person(x, d).
+
+
+
+/************* problem 2 **************/
+/**** Find two people with the largest number of children ****/
+.decl p2(x:PersonType, d:DescriptionType, n:number)
+.decl D(a:PersonType, b:PersonType)
+.decl T(p:PersonType, m:number)
+.decl Q(m:number)
+.decl P1(p:PersonType, m:number)
+.decl P2(p:PersonType, m:number)
+.decl Q1(p:PersonType, m:number)
+.decl Q2(p:PersonType, m:number)
+
+// .output T(IO=stdout)
+// .output Q(IO=stdout)
+// .output Q1(IO=stdout)
+// .output Q2(IO=stdout)
+// .output p2(IO=stdout)
+
+.output p2(filename="../submission/hw2-q3-2.ans")
+
+
+D(a, b) :- parent_child(a, b).
+D(a, c) :- D(a, b), parent_child(b, c).
+T(p, m) :- D(p, _), m = count : {D(p, b)}.
+
+// Q(d) :- T(p, d), p = "Priscilla".
+// returns 123 (number of descendants for Priscilla)
+
+P1(p, m) :- T(p , m), female(p).
+P2(p, m) :- T(p, m), male(p).
+
+// Q(maxChildren) :- maxChildren = max m : {T(_, m)}.
+Q1(p, maxChildren) :- P1(_, _), maxChildren = max m : {P1(p, m)}.
+Q2(p, maxChildren) :- P2(_, _), maxChildren = max m : {P2(p, m)}.
+
+p2(x, d, n) :- Q1(x, n), person(x, d).
+p2(x, d, n) :- Q2(x, n), person(x, d).
+
+
+
+/************* problem 3 **************/
+/**** Find find the minimum and maximum generation of each living person ****/
+.decl p3(x:PersonType, m1:number, m2:number)
+.decl G(x:PersonType, m:number)
+.decl H(x:PersonType, m:number)
+
+.output p3(filename="../submission/hw2-q3-3.ans")
+
+G(x, 0) :- person(x, _), !parent_child(_, x).
+G(x, n+1) :- parent_child(y, x), G(y, n).
+H(x, m) :- G(x, m), person_living(x).
+p3(x, m1, m2) :- H(x, _), m1 = min m : {H(x, m)}, m2 = max m : {H(x, m)}.
+
+
+
+/************* problem 4 **************/
+/**** Find all MCAs ****/
+.decl p4(x:PersonType)
+.decl M(p:PersonType, d:PersonType)
+.decl N(p:PersonType, n:number)
+
+.output p4(filename="../submission/hw2-q3-4.ans")
+
+M(p, d) :- female(p), person_living(d), parent_child(p, d).
+M(q, d) :- female(q), M(p, d), parent_child(q, p).
+N(q, n) :- M(q, _), n = count : {M(q, _)}.
+p4(x) :- N(x, n), n = 22.
+
+
+
+/************* problem 5 **************/
+/**** Find the MRCA ****/
+.decl p5(x:PersonType)
+.decl R(a:PersonType, b:PersonType)
+
+.output p5(filename="../submission/hw2-q3-5.ans")
+
+R(a, b) :- p4(a), p4(b), parent_child(a, b).
+p5(x) :- p4(x), !R(x, _).
