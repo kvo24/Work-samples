@@ -9,7 +9,7 @@ with who_directed_most_movies as (
 select n.name as most_prolific_director
 from name n, who_directed_most_movies w
 where n.id = w.director;
-
+-- Dick Carson
 
 -- 1b)
 create or replace view dick_carson_movies as
@@ -26,6 +26,16 @@ with all_dick_carson_collaborators as (
 select top 10 n.name as dick_carson_top_10_collaborators
 from name n join all_dick_carson_collaborators a on n.id = a.collaborator
 order by a.number_of_collaborations desc;
+-- Griffin, Merv
+-- White, Vanna 
+-- Sajak, Pat
+-- Jones, Nancy 
+-- O'Donnell, Charlie 
+-- Clark, Jack 
+-- Friedman, Harry 
+-- Macker, John 
+-- Kelly, M.G. 
+-- Stafford, Susan
 
 
 -- 1c)
@@ -37,6 +47,7 @@ with dick_carson_career as (
 select top 1 year as dick_carson_most_productive_year
 from dick_carson_career c
 order by c.number_of_movies_directed desc;
+-- 1984
 
 
 -- 2a)
@@ -73,6 +84,16 @@ with movie_profits as (
 )
 select movie_title as top_10_most_profitable_movies
 from movie_profits;
+-- Avatar
+-- Titanic
+-- The Avengers
+-- Harry Potter and the Deathly Hallows: Part 2
+-- The Lord of the Rings: The Return of the King
+-- Tranformers: Dark of the Moon
+-- Skyfall
+-- The Lion King
+-- Toy Story 3
+-- Jurassic Park
 
 
 -- 3a)
