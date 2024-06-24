@@ -121,3 +121,6 @@ p4(x) :- N(x, n), n = 22.
 
 R(a, b) :- p4(a), p4(b), parent_child(a, b).
 p5(x) :- p4(x), !R(x, _).
+
+// The Mitochondrial Eve is...drum-roll...
+// Jecholiah (or Jecoliah)
