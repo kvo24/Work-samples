@@ -1,4 +1,4 @@
-### Warm Up with Relational Algebra
+### Relational Algebra ###
 
 
 1. Write the equivalent SQL query to this relational algebra plan: figs/ra.pdf.
