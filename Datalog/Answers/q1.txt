@@ -2,7 +2,8 @@
 
 1. Write the equivalent SQL query to this relational algebra plan: figs/ra.pdf.
 
-/*** BEGIN ANSWER ***/
+
+/*** ANSWER ***/
 
 with living_grandparents as (
     select *
@@ -17,7 +18,7 @@ from (select p1, p3, count(*) as y
 group by p1
 
 
-/*
+/*** EXPLANATION ***/
 
 GREEK SYMBOLS
 Gamma: group-by
@@ -47,5 +48,3 @@ OPERATIONS
 => We find, for every living grandparent, a number that represents
    the maximum number of grandchildren provided to them by any single
    child of theirs.
-
-*/
