@@ -110,6 +110,7 @@ actrixes as (
 select count(distinct d.movie_id) as number_of_movies_where_director_also_acts
 from directors d, actrixes a
 where d.person_id = a.person_id and d.movie_id = a.movie_id;
+-- 139180
 
 
 -- 3b)
@@ -121,6 +122,7 @@ with cast_size as (
 )
 select avg(number_of_actrixes)
 from cast_size;
+-- 9.849613
 
 
 -- 5a) Histogram of cast size
