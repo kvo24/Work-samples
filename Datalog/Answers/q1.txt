@@ -1,3 +1,9 @@
+### Part 1: Warm Up with Relational Algebra
+
+1. Write the equivalent SQL query to this relational algebra plan: figs/ra.pdf.
+
+/*** BEGIN ANSWER ***/
+
 with living_grandparents as (
     select *
     from person_living p, parent_child c, (select p1 as p3, p2 as p4 
@@ -9,8 +15,6 @@ from (select p1, p3, count(*) as y
       from living_grandparents
       group by p1, p3)
 group by p1
-
-
 
 
 /*
