@@ -66,3 +66,7 @@ field_name
 
 create index if not exists index_on_Field_p on Field(p);
 create index if not exists index_on_Field_v on Field(v);
+
+
+-- Analytic query:
+select top 20 from (select id, count(distinct pubid) as pub_count from authored group by id) order by pub_count;
